@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {LoginService} from '../../service/login.service';
 import {RouteConstant} from '../../constant/RouteConstant';
 import {AuthService} from '../../service/auth/auth.service';
+import {NgProgress} from '@ngx-progressbar/core';
 
 
 @Component({
@@ -15,6 +16,7 @@ export class LoginComponent implements OnInit {
   submitted = false;
   // message
   showLoginError = false;
+  loading = false;
 
   constructor(private loginService: LoginService,
               private authService: AuthService,
@@ -28,7 +30,7 @@ export class LoginComponent implements OnInit {
   onclickSubmit() {
     this.submitted = true;
     // send data to api to login
-    this.startLoading();
+    this.loading = true;
     this.loginService.login(this.loginName, this.password).subscribe(credentialData => {
       if (credentialData !== null && credentialData.token && credentialData.token.length) {
         this.authService.saveCredentialData(credentialData);
@@ -36,23 +38,14 @@ export class LoginComponent implements OnInit {
       } else {
         this.showLoginError = true;
       }
-
-      this.completeLoading();
+      this.loading = false;
     });
   }
 
   private checkIfLoginAlready() {
-    // const isAuthenticated = this.authService.isAuthenticated();
-    // if (isAuthenticated) {
-    //   this.router.navigate([RouteConstant.HOME]);
-    // }
-  }
-
-  startLoading() {
-    // this.progress.start();
-  }
-
-  completeLoading() {
-    // this.progress.complete();
+    const isAuthenticated = this.authService.isAuthenticated();
+    if (isAuthenticated) {
+      this.router.navigate([RouteConstant.NONE]);
+    }
   }
 }
