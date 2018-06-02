@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {LoginService} from '../../service/login.service';
+import {RouteConstant} from "../../constant/RouteConstant";
+import {AuthService} from "../../service/auth/auth.service";
 
 
 @Component({
@@ -15,6 +17,7 @@ export class LoginComponent implements OnInit {
   showLoginError = false;
 
   constructor(private loginService: LoginService,
+              private authService: AuthService,
               private router: Router) {
   }
 
@@ -28,8 +31,8 @@ export class LoginComponent implements OnInit {
     this.startLoading();
     this.loginService.login(this.loginName, this.password).subscribe(credentialData => {
       if (credentialData !== null && credentialData.token && credentialData.token.length) {
-        // this.authService.saveCredentialData(credentialData);
-        this.router.navigate(['dashboard']);
+        this.authService.saveCredentialData(credentialData);
+        this.router.navigate([RouteConstant.NONE]);
       } else {
         this.showLoginError = true;
       }
