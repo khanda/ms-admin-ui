@@ -1,8 +1,8 @@
 export class RouteConstant {
   // single constant
   public static readonly NONE = '';
-  public static readonly HOME = 'trang-chu';
-  public static readonly LOGIN = 'dang-nhap';
+  public static readonly HOME = 'home';
+  public static readonly LOGIN = 'login';
   // admin
   public static readonly MANAGEMENT = 'management';
   public static readonly ACCOUNTS = 'accounts';

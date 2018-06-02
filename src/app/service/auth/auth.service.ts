@@ -6,6 +6,8 @@ import {CredentialConstant} from '../../constant/CredentialConstant';
 import {CredentialData} from '../../entity/CredentialData';
 import {HttpRequest} from '@angular/common/http';
 import {Observable, of} from 'rxjs/index';
+import {Router} from '@angular/router';
+import {RouteConstant} from '../../constant/RouteConstant';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +18,9 @@ export class AuthService {
   redirectUrl: string;
   cachedRequests: Array<HttpRequest<any>> = [];
 
+  constructor(private router: Router) {
+  }
+
   login(): Observable<boolean> {
     const token = localStorage.getItem(CredentialConstant.TOKEN);
     if (token && token.length) {
@@ -24,9 +29,11 @@ export class AuthService {
     return of(this.isLoggedIn);
   }
 
-  logout(): void {
+  public logout(): void {
     localStorage.clear();
     this.isLoggedIn = false;
+    console.log('logout');
+    this.router.navigate([RouteConstant.LOGIN]);
   }
 
   public getToken(): string {
@@ -63,7 +70,6 @@ export class AuthService {
     localStorage.setItem(CredentialConstant.USERNAME, credentialData.userName);
     localStorage.setItem(CredentialConstant.ROLE, credentialData.role);
     localStorage.setItem(CredentialConstant.ROLE_DESCRIPTION, credentialData.roleDescription);
-    console.log('save credential data');
   }
 
   public collectFailedRequest(request): void {
