@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {LoginService} from '../../service/login.service';
-import {RouteConstant} from "../../constant/RouteConstant";
-import {AuthService} from "../../service/auth/auth.service";
+import {RouteConstant} from '../../constant/RouteConstant';
+import {AuthService} from '../../service/auth/auth.service';
 
 
 @Component({
