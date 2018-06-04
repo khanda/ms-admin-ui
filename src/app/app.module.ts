@@ -43,13 +43,30 @@ import {HttpClientModule} from '@angular/common/http';
 import {NgProgressModule} from '@ngx-progressbar/core';
 import {NgProgressHttpModule} from '@ngx-progressbar/http';
 import {NgProgressRouterModule} from '@ngx-progressbar/router';
+import {RestangularModule, Restangular} from 'ngx-restangular';
+import {CredentialConstant} from './constant/CredentialConstant';
+
+export function tokenGetter() {
+  return localStorage.getItem(CredentialConstant.TOKEN);
+}
+// Function for setting the default restangular configuration
+export function RestangularConfigFactory(RestangularProvider) {
+  RestangularProvider.setBaseUrl('http://localhost:3000/api');
+  RestangularProvider.setDefaultHeaders({'Authorization': ''});
+  // by each request to the server receive a token and update headers with it
+  RestangularProvider.addFullRequestInterceptor((element, operation, path, url, headers, params) => {
+    return {
+      headers: Object.assign({}, headers, {Authorization: `${tokenGetter()}`})
+    };
+  });
+}
 
 @NgModule({
   imports: [
-    HttpClientModule,
     FormsModule,
     BrowserModule,
     CommonModule,
+    HttpClientModule,
     AppRoutingModule,
     AppAsideModule,
     AppBreadcrumbModule.forRoot(),
@@ -60,10 +77,11 @@ import {NgProgressRouterModule} from '@ngx-progressbar/router';
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
     ChartsModule,
-    HttpClientModule,
     NgProgressModule.forRoot(),
     NgProgressHttpModule,
-    NgProgressRouterModule
+    NgProgressRouterModule,
+    // Importing RestangularModule and making default configs for restanglar
+    RestangularModule.forRoot(RestangularConfigFactory),
   ],
   declarations: [
     AppComponent,
@@ -71,7 +89,7 @@ import {NgProgressRouterModule} from '@ngx-progressbar/router';
     P404Component,
     P500Component,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
   ],
   providers: [
     {

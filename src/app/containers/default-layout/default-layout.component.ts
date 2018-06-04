@@ -27,25 +27,8 @@ export class DefaultLayoutComponent {
     });
   }
 
-  start() {
-    // this.progress.start();
-    this.testHttp();
-  }
-  end() {
-    this.progress.complete();
-  }
-
   logout() {
     this.auth.logout();
   }
 
-  testHttp() {
-    // this.preventAbuse = true;
-    this.http.get('https://reqres.in/api/users?delay=2').subscribe(res => {
-      console.log(res);
-      setTimeout(() => {
-        // this.preventAbuse = false;
-      }, 800);
-    });
-  }
 }

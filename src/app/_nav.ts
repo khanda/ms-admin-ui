@@ -13,6 +13,11 @@ export const navItems = [
     name: 'Theme'
   },
   {
+    name: 'Admin',
+    url: '/admin/users',
+    icon: 'icon-user'
+  },
+  {
     name: 'Colors',
     url: '/theme/colors',
     icon: 'icon-drop'
