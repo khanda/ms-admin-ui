@@ -65,5 +65,22 @@
   "employee.leader": "Tổ trưởng",
   "employee.role.normal": "Thành viên thường",
   "employee.code": "Mã nhân viên",
-  "employee.manager": "Người quản lý"
+  "employee.manager": "Người quản lý",
+  "validation": {
+    "more_than": "Cần nhiều hơn {{value}} kí tự",
+    "less_than": "Không được vượt quá {{value}} kí tự",
+    "number_letter_underscore_-": "Chỉ được nhập chữ cái, số, - và _",
+    "repeat_password": "Nhập lại mật khẩu",
+    "password_not_match": "Mật khẩu không khớp",
+    "require": "Thông tin này là bắt buộc."
+  },
+  "common_message":{
+    "error": "Đã xảy ra lỗi"
+  },
+  "account" : {
+    "back_to_list": "Quay lại danh sách tài khoản",
+    "new": "Thêm tài khoản",
+    "username": "Tên đăng nhập",
+    "role": "Vai trò"
+  }
 }

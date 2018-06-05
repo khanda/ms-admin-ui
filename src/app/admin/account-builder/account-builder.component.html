@@ -1,3 +1,122 @@
-<p>
-  account-builder works!
-</p>
+<div class="animated fadeIn">
+  <div class="card">
+    <div class="card-header">
+      <button type="submit" class="btn btn-ghost-primary"
+              [disabled]="showMessagePasswordNotMatch || !accountFormDir.form.touched ||
+               !accountFormDir.form.dirty || showMessageKey == SUCCESS || !accountFormDir.form.valid">
+        {{'button.save' | translate}}</button>
+      <button class="btn btn-ghost-primary ms-right" routerLink="/admin/user/list">{{'account.back_to_list' | translate}}</button>
+    </div>
+
+    <div class="card-body">
+      <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12">
+        <!--message area-->
+        <div class="alert alert-danger" *ngIf="showMessageKey == ERROR">
+          <span>{{'common_message.error' | translate}}</span>
+        </div>
+
+        <form [formGroup]="accountForm" #accountFormDir="ngForm" (ngSubmit)="onSubmit()">
+          <!--USERNAME-->
+          <div class="form-group row">
+            <label for="username" class="col-sm-3 col-md-4 col-xl-3  col-form-label text-right">
+              {{'account.username' | translate}} <span class="text-danger">&#042;</span>
+            </label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="username" name="username"
+                     formControlName="userName"
+                     required
+                     [readonly]="mode != NEW"
+                     [class.is-invalid]="userName.invalid && (userName.dirty || userName.touched)">
+              <div *ngIf="userName.invalid && (userName.dirty || userName.touched)" class="invalid-feedback">
+                <div *ngIf="userName.errors.required"><span>{{'validation.require' | translate}}</span></div>
+                <div *ngIf="userName.errors.minlength">{{'validation.more_than' | translate: buildTranslateParam(USERNAME_MIX) }}</div>
+                <div *ngIf="userName.errors.maxlength">{{'validation.less_than' | translate: buildTranslateParam(USERNAME_MAX) }}</div>
+                <div *ngIf="userName.errors.invalidExp">{{'validation.number_letter_underscore_-' | translate }}</div>
+              </div>
+            </div>
+          </div>
+          <!--PASSWORD-->
+          <div formGroupName="passwords" class="my-exclude-invalid-form" *ngIf="mode==NEW">
+            <div class="form-group row">
+              <label for="password" class="col-sm-3 col-md-4  col-xl-3  col-form-label text-right">
+                Mật khẩu <span class="text-danger">&#042;</span>
+              </label>
+              <div class="col-sm-8">
+                <input type="password"
+                       class="form-control"
+                       id="password"
+                       name="password"
+                       formControlName="password"
+                       required
+                       [readonly]="mode == VIEW"
+                       (keyup)="getPasswordValue($event.target.value)"
+                       [class.is-invalid]="password.invalid && (password.dirty || password.touched)">
+
+                <div *ngIf="password.invalid && (password.dirty || password.touched)" class="invalid-feedback">
+                  <div *ngIf="password.errors.required"><span>{{'validation.require' | translate}}</span></div>
+                  <div *ngIf="password.errors.minlength"><span>{{'validation.more_than' | translate: buildTranslateParam(PASSWORD_MIX) }}</span></div>
+                  <div *ngIf="password.errors.maxlength"><span>{{'validation.less_than' | translate: buildTranslateParam(PASSWORD_MAX) }}</span></div>
+                  <div *ngIf="password.errors.invalidExp"><span>{{'validation.number_letter_underscore_-' | translate }}</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="passwordConfirm" class="col-sm-3 col-md-4 col-xl-3  col-form-label text-right">
+                {{'validation.repeat_password' | translate}}
+                <span class="text-danger">&#042;</span>
+              </label>
+              <div class="col-sm-8">
+
+                <input type="password"
+                       class="form-control"
+                       id="passwordConfirm"
+                       name="passwordConfirm"
+                       (keyup)="onChangeConfirmedPassword($event.target.value)"
+                       formControlName="passwordConfirm"
+                       required
+                       [readonly]="mode == VIEW"
+                       [class.is-invalid]="passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched)">
+
+                <div *ngIf="passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched)"
+                     class="invalid-feedback">
+                  <div *ngIf="passwordConfirm.errors.required"><span>{{'validation.require' | translate}}</span></div>
+                  <div *ngIf="passwordConfirm.errors.minlength"><span>{{'validation.more_than' | translate: buildTranslateParam(PASSWORD_MIX) }}</span></div>
+                  <div *ngIf="passwordConfirm.errors.maxlength"><span>{{'validation.less_than' | translate: buildTranslateParam(PASSWORD_MAX) }}</span></div>
+                  <div *ngIf="passwordConfirm.errors.invalidExp"><span>{{'validation.number_letter_underscore_-' | translate }}</span></div>
+                </div>
+
+                <div *ngIf="showMessagePasswordNotMatch" class="invalid-feedback">
+                  <span>{{'validation.password_not_match' | translate}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!--ROLE-->
+          <div class="form-group row">
+            <label for="userRole" class="col-sm-3 col-md-4 col-xl-3  col-form-label text-right">
+              {{'account.role' | translate}} <span class="text-danger">&#042;</span>
+            </label>
+            <div class="col-sm-8">
+              <select class="custom-select form-control"
+                      id="userRole" name="userRole"
+                      formControlName="userRole"
+                      required
+                      (change)="onSelectRole($event.target.value)"
+                      [class.is-invalid]="userRole.invalid && (userRole.dirty || userRole.touched)">
+                <option *ngFor="let role of roleList; let index = index" [value]="role.id">{{role.description}}</option>
+              </select>
+              <div *ngIf="userRole.invalid && (userRole.dirty || userRole.touched)" class="invalid-feedback">
+                <div *ngIf="userRole.errors.required">
+                  <span>{{'validation.require' | translate}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+

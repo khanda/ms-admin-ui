@@ -1,7 +1,7 @@
 <div class="animated fadeIn">
   <div class="card">
     <div class="card-header">
-      <button class="btn btn-ghost-primary">New</button>
+      <button class="btn btn-ghost-primary" routerLink="/admin/user/builder">New</button>
     </div>
     <div class="card-body no-padding">
       <ngx-datatable
@@ -9,7 +9,7 @@
           [rows]='rows'
           [columns]="columns"
           [loadingIndicator]="loadingIndicator"
-          [columnMode]="'standard'"
+          [columnMode]="'force'"
           [headerHeight]="50"
           [footerHeight]="50"
           [rowHeight]="50"

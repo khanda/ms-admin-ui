@@ -15,19 +15,18 @@ export class AccountListComponent implements OnInit {
     {name: 'email'},
     {name: 'role'}
   ];
-  timeout: any;
-
   currentPage: 1;
   itemPerPage: 10;
+
   constructor(private restangular: Restangular,
               private router: Router) {
   }
 
-  //
-  // pageChanged(event: any): void {
-  //   this.currentPage = event.page;
-  //   this.getListAccount(this.currentPage, this.itemPerPage);
-  // }
+
+  pageChanged(event: any): void {
+    this.currentPage = event.page;
+    this.getListAccount(this.currentPage, this.itemPerPage);
+  }
 
   ngOnInit() {
     this.getListAccount(this.currentPage, this.itemPerPage);
@@ -45,30 +44,4 @@ export class AccountListComponent implements OnInit {
     });
   }
 
-  onPage(event) {
-    clearTimeout(this.timeout);
-    this.timeout = setTimeout(() => {
-      console.log('paged!', event);
-    }, 100);
-  }
-
-  fetch(cb) {
-    const req = new XMLHttpRequest();
-    req.open('GET', `assets/data/100k.json`);
-
-    req.onload = () => {
-      const rows = JSON.parse(req.response);
-
-      for (const row of rows) {
-        row.height = Math.floor(Math.random() * 80) + 50;
-      }
-      cb(rows);
-    };
-
-    req.send();
-  }
-
-  getRowHeight(row) {
-    return row.height;
-  }
 }

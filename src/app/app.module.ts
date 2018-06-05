@@ -1,17 +1,9 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {LocationStrategy, HashLocationStrategy, CommonModule} from '@angular/common';
+import {CommonModule, HashLocationStrategy, LocationStrategy} from '@angular/common';
 
-import {PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
-import {PERFECT_SCROLLBAR_CONFIG} from 'ngx-perfect-scrollbar';
-import {PerfectScrollbarConfigInterface} from 'ngx-perfect-scrollbar';
-
-const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
-  suppressScrollX: true
-};
-
+import {PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface, PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
 import {AppComponent} from './app.component';
-
 // Import containers
 import {DefaultLayoutComponent} from './containers';
 
@@ -19,32 +11,32 @@ import {P404Component} from './views/error/404.component';
 import {P500Component} from './views/error/500.component';
 import {LoginComponent} from './views/login/login.component';
 import {RegisterComponent} from './views/register/register.component';
-
-const APP_CONTAINERS = [
-  DefaultLayoutComponent
-];
-
-import {
-  AppAsideModule,
-  AppBreadcrumbModule,
-  AppHeaderModule,
-  AppFooterModule,
-  AppSidebarModule,
-} from '@coreui/angular';
-
+import {AppAsideModule, AppBreadcrumbModule, AppFooterModule, AppHeaderModule, AppSidebarModule} from '@coreui/angular';
 // Import routing module
 import {AppRoutingModule} from './app.routing';
 // Import 3rd party components
 import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 import {TabsModule} from 'ngx-bootstrap/tabs';
 import {ChartsModule} from 'ng2-charts/ng2-charts';
-import {FormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {NgProgressModule} from '@ngx-progressbar/core';
 import {NgProgressHttpModule} from '@ngx-progressbar/http';
 import {NgProgressRouterModule} from '@ngx-progressbar/router';
-import {RestangularModule, Restangular} from 'ngx-restangular';
+import {RestangularModule} from 'ngx-restangular';
 import {CredentialConstant} from './constant/CredentialConstant';
+import {ForbiddenValidatorDirective} from './directive/regExp-validator.directive';
+import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {ThirdPartyModule} from "./third-party/third-party.module";
+
+const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
+  suppressScrollX: true
+};
+
+const APP_CONTAINERS = [
+  DefaultLayoutComponent
+];
 
 export function tokenGetter() {
   return localStorage.getItem(CredentialConstant.TOKEN);
@@ -60,10 +52,15 @@ export function RestangularConfigFactory(RestangularProvider) {
     };
   });
 }
+// AoT requires an exported function for factories
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
 
 @NgModule({
   imports: [
     FormsModule,
+    ReactiveFormsModule,
     BrowserModule,
     CommonModule,
     HttpClientModule,
@@ -82,6 +79,7 @@ export function RestangularConfigFactory(RestangularProvider) {
     NgProgressRouterModule,
     // Importing RestangularModule and making default configs for restanglar
     RestangularModule.forRoot(RestangularConfigFactory),
+    ThirdPartyModule
   ],
   declarations: [
     AppComponent,
@@ -90,6 +88,7 @@ export function RestangularConfigFactory(RestangularProvider) {
     P500Component,
     LoginComponent,
     RegisterComponent,
+    ForbiddenValidatorDirective,
   ],
   providers: [
     {
