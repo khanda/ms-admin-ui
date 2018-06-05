@@ -3,6 +3,10 @@
 
 // Import styles
 @import "node_modules/@coreui/coreui/scss/coreui";
-
+//ngx-datatable
+@import '~@swimlane/ngx-datatable/release/index.css';
+@import '~@swimlane/ngx-datatable/release/themes/material.css';
+@import '~@swimlane/ngx-datatable/release/assets/icons.css';
+@import '~@swimlane/ngx-datatable/release/assets/app.css';
 // If you want to add something do it here
 @import "custom";

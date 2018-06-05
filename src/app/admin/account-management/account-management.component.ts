@@ -4,7 +4,6 @@ import {Account} from '../../entity/Account';
 import {MyConstant} from '../../constant/MyConstant';
 import {Router} from '@angular/router';
 import {Restangular} from 'ngx-restangular';
-import {AuthService} from "../../service/auth/auth.service";
 
 @Component({
   selector: 'app-account-management',
@@ -12,32 +11,28 @@ import {AuthService} from "../../service/auth/auth.service";
   styleUrls: ['./account-management.component.scss']
 })
 export class AccountManagementComponent implements OnInit {
-  public options = {
-    position: [MessageConstant.VERTICAL_POSITION, MessageConstant.HORIZONTAL_POSITION],
-    timeOut: MessageConstant.TIMEOUT,
-    lastOnBottom: true
-  };
-  // pagination
-  currentPage = 1;
-  itemPerPage = MyConstant.ITEM_PER_PAGE;
-  total = 0;
-  numPages = 0;
-  pages: number[] = [];
+  rows;
+  expanded = {};
+  timeout: any;
 
   listAccount: Account[] = [];
   selectedAccount: Account = new Account();
 
   constructor(private restangular: Restangular,
               private router: Router) {
+    this.fetch((data) => {
+      this.rows = data;
+    });
   }
 
-  pageChanged(event: any): void {
-    this.currentPage = event.page;
-    this.getListAccount(this.currentPage, this.itemPerPage);
-  }
+  //
+  // pageChanged(event: any): void {
+  //   this.currentPage = event.page;
+  //   this.getListAccount(this.currentPage, this.itemPerPage);
+  // }
 
   ngOnInit() {
-    this.getListAccount(this.currentPage, this.itemPerPage);
+    // this.getListAccount(this.currentPage, this.itemPerPage);
   }
 
   getListAccount(page: number, pageSize: number) {
@@ -49,14 +44,30 @@ export class AccountManagementComponent implements OnInit {
     });
   }
 
-  onClickAdd() {
-
+  onPage(event) {
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => {
+      console.log('paged!', event);
+    }, 100);
   }
 
-  onClickDelete(index: number) {
+  fetch(cb) {
+    const req = new XMLHttpRequest();
+    req.open('GET', `assets/data/100k.json`);
+
+    req.onload = () => {
+      const rows = JSON.parse(req.response);
+
+      for (const row of rows) {
+        row.height = Math.floor(Math.random() * 80) + 50;
+      }
+      cb(rows);
+    };
+
+    req.send();
   }
 
-  showAlertMessage(content: string, type: string, title: string) {
-
+  getRowHeight(row) {
+    return row.height;
   }
 }
