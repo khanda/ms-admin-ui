@@ -1,1 +1,13 @@
 // Here you can add other styles
+app-sidebar-nav {
+  ul {
+    margin: 0 !important;
+    li {
+      padding: 0;
+    }
+  }
+}
+
+.table-fullscreen {
+  top: 107px;
+}

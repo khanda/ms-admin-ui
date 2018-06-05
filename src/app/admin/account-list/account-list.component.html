@@ -1,7 +1,7 @@
 <div class="animated fadeIn">
 
   <ngx-datatable
-      class='material'
+      class="material fullscreen table-fullscreen"
       [rows]='rows'
       [columns]="columns"
       [loadingIndicator]="loadingIndicator"
@@ -9,7 +9,6 @@
       [headerHeight]="50"
       [footerHeight]="50"
       [rowHeight]="50"
-      [scrollbarV]="true"
-      (page)="onPage($event)">
+      [scrollbarV]="true">
   </ngx-datatable>
 </div>
