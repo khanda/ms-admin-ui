@@ -14,8 +14,28 @@ export const navItems = [
   },
   {
     name: 'Admin',
-    url: '/admin/users',
-    icon: 'icon-user'
+    url: '/admin',
+    icon: 'icon-admin',
+    children: [
+      {
+        name: 'User Management',
+        url: '/admin/user',
+        icon: 'icon-user',
+        children: [
+          {
+            name: 'Users',
+            url: '/admin/user/list',
+            icon: 'icon-list'
+          },
+          {
+            name: 'User Builder',
+            url: '/admin/user/builder',
+            icon: 'icon-plus'
+          },
+        ]
+      }
+
+    ]
   },
   {
     name: 'Colors',
