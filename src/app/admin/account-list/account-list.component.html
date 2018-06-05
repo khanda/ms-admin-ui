@@ -1,14 +1,20 @@
 <div class="animated fadeIn">
-
-  <ngx-datatable
-      class="material fullscreen table-fullscreen"
-      [rows]='rows'
-      [columns]="columns"
-      [loadingIndicator]="loadingIndicator"
-      [columnMode]="'force'"
-      [headerHeight]="50"
-      [footerHeight]="50"
-      [rowHeight]="50"
-      [scrollbarV]="true">
-  </ngx-datatable>
+  <div class="card">
+    <div class="card-header">
+      <button class="btn btn-ghost-primary">New</button>
+    </div>
+    <div class="card-body no-padding">
+      <ngx-datatable
+          class="material table-full-width"
+          [rows]='rows'
+          [columns]="columns"
+          [loadingIndicator]="loadingIndicator"
+          [columnMode]="'standard'"
+          [headerHeight]="50"
+          [footerHeight]="50"
+          [rowHeight]="50"
+          [scrollbarV]="true">
+      </ngx-datatable>
+    </div>
+  </div>
 </div>

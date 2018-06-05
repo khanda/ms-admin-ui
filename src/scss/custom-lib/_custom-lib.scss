@@ -1,0 +1,31 @@
+// Here you can add other styles
+app-sidebar-nav {
+  ul {
+    margin: 0 !important;
+    li {
+      padding: 0;
+    }
+  }
+}
+
+.breadcrumb {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.table-full-width {
+  width: 100%;
+  margin: 0;
+}
+
+.no-padding {
+  padding: 0;
+}
+
+.main .container-fluid {
+  padding: 0;
+}
+
+.card-header {
+  padding: .25rem .5rem;
+}
