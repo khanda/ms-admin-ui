@@ -43,5 +43,4 @@ export class AccountListComponent implements OnInit {
       this.loadingIndicator = false;
     });
   }
-
 }

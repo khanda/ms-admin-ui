@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {UserRole} from '../../entity/UserRole';
 import {AccountService} from '../../service/account.service';
 import {Account} from '../../entity/Account';
@@ -9,7 +9,10 @@ import {MessageConstant} from '../../constant/MessageConstant';
 import {Router} from '@angular/router';
 import {CredentialData} from '../../entity/CredentialData';
 import {AuthService} from '../../service/auth/auth.service';
-import {validate} from "codelyzer/walkerFactory/walkerFn";
+import {Restangular} from "ngx-restangular";
+import {USER_ROLES} from "../../constant/_user_roles";
+import {MessageData} from "../../entity/MessageData";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-account-builder',
@@ -40,13 +43,15 @@ export class AccountBuilderComponent implements OnInit {
   readonly UPDATE = MessageConstant.UPDATE;
   readonly NEW = MessageConstant.NEW;
 
-  @Input() mode = MessageConstant.NEW;
-  @Input() account: Account = new Account();
+  mode = MessageConstant.NEW;
+  account: Account = new Account();
   credentialData: CredentialData;
 
   constructor(private fb: FormBuilder,
               private authService: AuthService,
-              private router: Router) {
+              private router: Router,
+              private translate: TranslateService,
+              private restangular: Restangular) {
   }
 
   ngOnInit() {
@@ -89,10 +94,7 @@ export class AccountBuilderComponent implements OnInit {
   }
 
   getRoles() {
-    return [];
-    // this.accountService.getListRoles().subscribe(roles => {
-    //   this.roleList = roles;
-    // });
+    this.roleList = USER_ROLES;
   }
 
   getPasswordValue(event: string) {
@@ -105,18 +107,19 @@ export class AccountBuilderComponent implements OnInit {
 
   onSubmit() {
     const accountData = this.prepareDataToSave(this.accountForm.value, this.roleList);
-    // this.accountService.saveAccount(accountData).subscribe(_result => {
-    //   if (_result) {
-    //     const data = new MessageData();
-    //     data.title = this.translate.translateString('message.title.success');
-    //     data.message = this.translate.translateString('message.save.content.success');
-    //     data.showMessage = true;
-    //     data.type = MessageConstant.ALERT_SUCCESS;
-    //     this.backToList.emit(data);
-    //   } else {
-    //     this.showMessageKey = this.ERROR;
-    //   }
-    // });
+    this.restangular.one('users').customPOST(accountData).subscribe(result => {
+      console.log(result);
+      if (result) {
+        const data = new MessageData();
+        // data.title = this.translate.translateString('message.title.success');
+        // data.message = this.translate.translateString('message.save.content.success');
+        data.showMessage = true;
+        data.type = MessageConstant.ALERT_SUCCESS;
+        this.router.navigate(['admin/user/list']);
+      } else {
+        this.showMessageKey = this.ERROR;
+      }
+    });
   }
 
   get userName() {
@@ -142,6 +145,7 @@ export class AccountBuilderComponent implements OnInit {
   private prepareDataToSave(formValue: any, roleList: UserRole[]): Account {
     const acc: Account = this.account;
     acc.userName = formValue.userName;
+    acc.email = formValue.userName;
     acc.password = this.mode === MessageConstant.NEW ? formValue.passwords.password : '';
     acc.roleId = formValue.userRole;
     acc.userRole = roleList.find(role => role.id === acc.roleId);

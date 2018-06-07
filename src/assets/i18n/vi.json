@@ -82,5 +82,9 @@
     "new": "Thêm tài khoản",
     "username": "Tên đăng nhập",
     "role": "Vai trò"
+  },
+  "userRole":{
+    "admin":"Quản trị viên",
+    "normalUser":"Người dùng thường"
   }
 }
