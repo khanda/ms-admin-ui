@@ -11,7 +11,6 @@ import {AuthService} from '../../service/auth/auth.service';
 import {Restangular} from 'ngx-restangular';
 import {USER_ROLES} from '../../constant/_user_roles';
 import {MessageData} from '../../entity/MessageData';
-import {TranslateService} from '@ngx-translate/core';
 import {AlertService} from "../../service/alert.service";
 
 @Component({
@@ -47,8 +46,6 @@ export class AccountBuilderComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private authService: AuthService,
               private router: Router,
-              private translate: TranslateService,
-              private alertService: AlertService,
               private restangular: Restangular) {
   }
 
@@ -116,7 +113,7 @@ export class AccountBuilderComponent implements OnInit {
             this.router.navigate(['admin/user/list']);
           }
         }, err => {
-          this.errorMessage = this.alertService.getMessage(err.error.error.statusCode);
+          this.errorMessage = AlertService.getMessage(err.error.error.statusCode);
           console.log(this.errorMessage);
         });
   }
