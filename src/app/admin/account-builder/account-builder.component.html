@@ -4,7 +4,7 @@
       <div class="card-header">
         <button type="submit" class="btn btn-ghost-primary"
                 [disabled]="showMessagePasswordNotMatch || !accountFormDir.form.touched ||
-               !accountFormDir.form.dirty || showMessageKey == SUCCESS || !accountFormDir.form.valid">
+               !accountFormDir.form.dirty || !accountFormDir.form.valid">
           {{'button.save' | translate}}
         </button>
         <button class="btn btn-ghost-primary ms-right" routerLink="/admin/user/list">{{'account.back_to_list' | translate}}</button>
@@ -13,10 +13,9 @@
       <div class="card-body">
         <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12">
           <!--MESSAGE-->
-          <div class="alert alert-danger" *ngIf="showMessageKey === ERROR">
-            <span>{{'common_message.error' | translate}}</span>
+          <div class="alert alert-danger" *ngIf="errorMessage">
+            <span>{{'account.module_name' | translate}}</span> <span>{{errorMessage | translate}}</span>
           </div>
-
 
           <!--USERNAME-->
           <div class="form-group row">
@@ -120,7 +119,7 @@
             <div class="col col-sm-8 offset-sm-3 offset-md-4 offset-xl-3 text-center">
               <button type="submit" class="btn btn-primary"
                       [disabled]="showMessagePasswordNotMatch || !accountFormDir.form.touched ||
-               !accountFormDir.form.dirty || showMessageKey == SUCCESS || !accountFormDir.form.valid">
+               !accountFormDir.form.dirty || !accountFormDir.form.valid">
                 {{'button.save' | translate}}
               </button>
             </div>

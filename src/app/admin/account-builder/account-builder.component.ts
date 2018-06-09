@@ -12,6 +12,7 @@ import {Restangular} from 'ngx-restangular';
 import {USER_ROLES} from '../../constant/_user_roles';
 import {MessageData} from '../../entity/MessageData';
 import {TranslateService} from '@ngx-translate/core';
+import {AlertService} from "../../service/alert.service";
 
 @Component({
   selector: 'app-account-builder',
@@ -33,11 +34,8 @@ export class AccountBuilderComponent implements OnInit {
   accountForm: FormGroup;
 
   // message controlling
-  showMessageKey = MessageConstant.NONE;
+  errorMessage = null;
   showMessagePasswordNotMatch = false;
-  readonly ERROR = MessageConstant.ERROR;
-  readonly SUCCESS = MessageConstant.SUCCESS;
-
   // mode
   readonly UPDATE = MessageConstant.UPDATE;
   readonly NEW = MessageConstant.NEW;
@@ -50,6 +48,7 @@ export class AccountBuilderComponent implements OnInit {
               private authService: AuthService,
               private router: Router,
               private translate: TranslateService,
+              private alertService: AlertService,
               private restangular: Restangular) {
   }
 
@@ -108,7 +107,6 @@ export class AccountBuilderComponent implements OnInit {
     const accountData = this.prepareDataToSave(this.accountForm.value, this.roleList);
     this.restangular.one('users').customPOST(accountData)
         .subscribe(result => {
-          console.log(result);
           if (result) {
             const data = new MessageData();
             // data.title = this.translate.translateString('message.title.success');
@@ -118,7 +116,8 @@ export class AccountBuilderComponent implements OnInit {
             this.router.navigate(['admin/user/list']);
           }
         }, err => {
-          this.showMessageKey = this.ERROR;
+          this.errorMessage = this.alertService.getMessage(err.error.error.statusCode);
+          console.log(this.errorMessage);
         });
   }
 

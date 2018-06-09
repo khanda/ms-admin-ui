@@ -74,17 +74,19 @@
     "password_not_match": "Mật khẩu không khớp",
     "require": "Thông tin này là bắt buộc."
   },
-  "common_message":{
-    "error": "Đã xảy ra lỗi"
+  "common_message": {
+    "error": "Đã xảy ra lỗi",
+    "duplicate": " đã tồn tại."
   },
-  "account" : {
+  "account": {
+    "module_name": "Tài khoản",
     "back_to_list": "Quay lại danh sách tài khoản",
     "new": "Thêm tài khoản",
     "username": "Tên đăng nhập",
     "role": "Vai trò"
   },
-  "userRole":{
-    "admin":"Quản trị viên",
-    "normalUser":"Người dùng thường"
+  "userRole": {
+    "admin": "Quản trị viên",
+    "normalUser": "Người dùng thường"
   }
 }
