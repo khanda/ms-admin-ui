@@ -7,7 +7,7 @@ export class UserRole {
   description: string;
   translateKey?: string;
 
-  constructor(id?: number, name?: string, description?: string, translateKey?: string = UserRole.NORMAL_USER_KEY) {
+  constructor(id?: number, name?: string, description?: string, translateKey: string = UserRole.NORMAL_USER_KEY) {
     this.id = id ? id : null;
     this.name = name ? name : null;
     this.description = description ? description : null;

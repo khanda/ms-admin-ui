@@ -1,6 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {UserRole} from '../../entity/UserRole';
-import {AccountService} from '../../service/account.service';
 import {Account} from '../../entity/Account';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {regExpValidator} from '../../directive/regExp-validator.directive';
@@ -9,10 +8,10 @@ import {MessageConstant} from '../../constant/MessageConstant';
 import {Router} from '@angular/router';
 import {CredentialData} from '../../entity/CredentialData';
 import {AuthService} from '../../service/auth/auth.service';
-import {Restangular} from "ngx-restangular";
-import {USER_ROLES} from "../../constant/_user_roles";
-import {MessageData} from "../../entity/MessageData";
-import {TranslateService} from "@ngx-translate/core";
+import {Restangular} from 'ngx-restangular';
+import {USER_ROLES} from '../../constant/_user_roles';
+import {MessageData} from '../../entity/MessageData';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-account-builder',
@@ -107,19 +106,20 @@ export class AccountBuilderComponent implements OnInit {
 
   onSubmit() {
     const accountData = this.prepareDataToSave(this.accountForm.value, this.roleList);
-    this.restangular.one('users').customPOST(accountData).subscribe(result => {
-      console.log(result);
-      if (result) {
-        const data = new MessageData();
-        // data.title = this.translate.translateString('message.title.success');
-        // data.message = this.translate.translateString('message.save.content.success');
-        data.showMessage = true;
-        data.type = MessageConstant.ALERT_SUCCESS;
-        this.router.navigate(['admin/user/list']);
-      } else {
-        this.showMessageKey = this.ERROR;
-      }
-    });
+    this.restangular.one('users').customPOST(accountData)
+        .subscribe(result => {
+          console.log(result);
+          if (result) {
+            const data = new MessageData();
+            // data.title = this.translate.translateString('message.title.success');
+            // data.message = this.translate.translateString('message.save.content.success');
+            data.showMessage = true;
+            data.type = MessageConstant.ALERT_SUCCESS;
+            this.router.navigate(['admin/user/list']);
+          }
+        }, err => {
+          this.showMessageKey = this.ERROR;
+        });
   }
 
   get userName() {
