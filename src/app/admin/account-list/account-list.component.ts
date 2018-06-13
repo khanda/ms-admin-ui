@@ -1,13 +1,17 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {Restangular} from 'ngx-restangular';
+import {AgGridNg2} from 'ag-grid-angular';
 @Component({
   selector: 'app-account-list',
   templateUrl: './account-list.component.html',
   styleUrls: ['./account-list.component.scss']
 })
-export class AccountListComponent implements OnInit {
+export class AccountListComponent implements OnInit, AfterViewInit {
+  @ViewChild('agGrid') agGrid: AgGridNg2;
+
   columnDefs = [
+    {headerName: 'Id', field: 'id', checkboxSelection: true},
     {headerName: 'Username', field: 'username'},
     {headerName: 'Email', field: 'email'},
     {headerName: 'Role', field: 'role'}
@@ -18,6 +22,10 @@ export class AccountListComponent implements OnInit {
 
   constructor(private restangular: Restangular,
               private router: Router) {
+  }
+
+  ngAfterViewInit() {
+    console.log(this.agGrid); // 👶 I am a child!
   }
 
   pageChanged(event: any): void {
@@ -35,5 +43,13 @@ export class AccountListComponent implements OnInit {
       this.rows = accounts.plain();
       console.log(this.rows);
     });
+  }
+
+  getSelectedRows() {
+    const selectedNodes = this.agGrid.api.getSelectedNodes();
+    const selectedData = selectedNodes.map(node => node.data);
+    console.log(selectedData);
+    // const selectedDataStringPresentation = selectedData.map(node => node.make + ' ' + node.model).join(', ');
+    // alert(`Selected nodes: ${selectedDataStringPresentation}`);
   }
 }

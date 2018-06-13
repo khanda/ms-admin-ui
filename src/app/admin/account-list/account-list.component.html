@@ -2,13 +2,19 @@
   <div class="card">
     <div class="card-header">
       <button class="btn btn-ghost-primary" routerLink="/admin/user/builder">New</button>
+      <button class="btn btn-ghost-primary" (click)="getSelectedRows()">Get Selected Rows</button>
+
     </div>
     <div class="card-body no-padding">
       <ag-grid-angular
+          #agGrid
           style="width: 100%; height: 500px;"
           class="ag-theme-balham"
+          [enableSorting]="true"
+          [enableFilter]="true"
           [rowData]="rows"
           [columnDefs]="columnDefs"
+          rowSelection="multiple"
       >
       </ag-grid-angular>
     </div>
