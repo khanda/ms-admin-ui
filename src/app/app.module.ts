@@ -29,6 +29,7 @@ import {ForbiddenValidatorDirective} from './directive/regExp-validator.directiv
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {ThirdPartyModule} from "./third-party/third-party.module";
+import {DropdownsComponent} from "./views/buttons/dropdowns.component";
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true

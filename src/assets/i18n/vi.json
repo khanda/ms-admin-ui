@@ -74,6 +74,11 @@
     "password_not_match": "Mật khẩu không khớp",
     "require": "Thông tin này là bắt buộc."
   },
+  "common_label":{
+    "action": "Hành động",
+    "edit": "Sửa",
+    "delete": "Xóa"
+  },
   "common_message": {
     "error": "Đã xảy ra lỗi",
     "duplicate": " đã tồn tại."
@@ -83,7 +88,8 @@
     "back_to_list": "Quay lại danh sách tài khoản",
     "new": "Thêm tài khoản",
     "username": "Tên đăng nhập",
-    "role": "Vai trò"
+    "role": "Vai trò",
+    "email": "Email"
   },
   "userRole": {
     "admin": "Quản trị viên",

@@ -9,5 +9,8 @@
 @import '~@swimlane/ngx-datatable/release/themes/bootstrap.css';
 @import '~@swimlane/ngx-datatable/release/assets/icons.css';
 @import '~@swimlane/ngx-datatable/release/assets/app.css';
+
+@import "~ag-grid/dist/styles/ag-grid.css";
+@import "~ag-grid/dist/styles/ag-theme-balham.css";
 // If you want to add something do it here
 @import "custom";
