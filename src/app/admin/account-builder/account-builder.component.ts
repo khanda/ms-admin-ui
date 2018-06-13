@@ -5,13 +5,15 @@ import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '
 import {regExpValidator} from '../../directive/regExp-validator.directive';
 import {LengthConstant} from '../../constant/LengthContant';
 import {MessageConstant} from '../../constant/MessageConstant';
-import {Router} from '@angular/router';
+import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {CredentialData} from '../../entity/CredentialData';
 import {AuthService} from '../../service/auth/auth.service';
 import {Restangular} from 'ngx-restangular';
 import {USER_ROLES} from '../../constant/_user_roles';
 import {MessageData} from '../../entity/MessageData';
-import {AlertService} from "../../service/alert.service";
+import {AlertService} from '../../service/alert.service';
+import {switchMap} from 'rxjs/internal/operators';
+import {of} from 'rxjs/index';
 
 @Component({
   selector: 'app-account-builder',
@@ -46,6 +48,7 @@ export class AccountBuilderComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private authService: AuthService,
               private router: Router,
+              private route: ActivatedRoute,
               private restangular: Restangular) {
   }
 
@@ -53,6 +56,7 @@ export class AccountBuilderComponent implements OnInit {
     this.createForm();
     this.getRoles();
     this.credentialData = this.authService.getCredentialData();
+    const id = this.route.snapshot.paramMap.get('id');
   }
 
   createForm() {
@@ -86,6 +90,12 @@ export class AccountBuilderComponent implements OnInit {
       });
       this.accountForm.addControl('passwords', passwordFormGroup);
     }
+  }
+
+  getUserById(id: number) {
+    return this.restangular.one('users').one(id).get().subscribe(data => {
+      console.log(data);
+    });
   }
 
   getRoles() {

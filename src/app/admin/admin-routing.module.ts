@@ -23,7 +23,14 @@ const routes: Routes = [
             path: 'builder',
             component: AccountBuilderComponent,
             data: {
-              title: 'Add or Edit User'
+              title: 'Add User'
+            }
+          },
+          {
+            path: 'builder/:id',
+            component: AccountBuilderComponent,
+            data: {
+              title: 'Edit User'
             }
           }
         ]

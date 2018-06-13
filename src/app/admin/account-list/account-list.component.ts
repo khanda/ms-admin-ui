@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Restangular} from 'ngx-restangular';
 import {AgGridNg2} from 'ag-grid-angular';
 @Component({
@@ -20,8 +20,14 @@ export class AccountListComponent implements OnInit, AfterViewInit {
   currentPage: 1;
   itemPerPage: 10;
 
+  actions = {
+    enableEdit: false,
+  };
+
   constructor(private restangular: Restangular,
-              private router: Router) {
+              private router: Router,
+              private route:  ActivatedRoute
+  ) {
   }
 
   ngAfterViewInit() {
@@ -45,11 +51,22 @@ export class AccountListComponent implements OnInit, AfterViewInit {
     });
   }
 
-  getSelectedRows() {
+  goToEdit() {
     const selectedNodes = this.agGrid.api.getSelectedNodes();
     const selectedData = selectedNodes.map(node => node.data);
     console.log(selectedData);
-    // const selectedDataStringPresentation = selectedData.map(node => node.make + ' ' + node.model).join(', ');
-    // alert(`Selected nodes: ${selectedDataStringPresentation}`);
+    if (!selectedData[0]) {
+      return;
+    }
+    const id = selectedData[0].id;
+    this.router.navigate(['/admin/user/builder'], id);
   }
+
+  onRowSelected(event) {
+    console.log('row ' + event.node.data.email + ' selected = ' + event.node.selected);
+    if (event.node.data.id) {
+      this.actions.enableEdit = true;
+    }
+  }
+
 }
