@@ -53,10 +53,10 @@ export class AccountBuilderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.createForm();
     this.getRoles();
+    this.getUserToEdit();
+    this.createForm();
     this.credentialData = this.authService.getCredentialData();
-    this._getUserToEdit();
   }
 
   createForm() {
@@ -92,7 +92,7 @@ export class AccountBuilderComponent implements OnInit {
     }
   }
 
-  _getUserToEdit() {
+  getUserToEdit() {
     const id = this.route.snapshot.paramMap.get('id');
     this.getUserById(id);
   }
@@ -102,10 +102,21 @@ export class AccountBuilderComponent implements OnInit {
       return;
     }
     return this.restangular.one('users').one(id).get().subscribe(data => {
-      // console.log(data);
+      this.account.userName = data.username;
+      this.account.password = data.password;
+      this.account.userRole = data.userRole;
+      this._updateForm(this.account);
+    });
+  }
 
-      this.account = data.plain();
-      console.log(this.account);
+  _updateForm(account: Account) {
+    console.log(account);
+
+    this.accountForm.patchValue({
+      userName: account.userName || ''
+    });
+    this.accountForm.patchValue({
+      userRole: account.userRole || ''
     });
   }
 
