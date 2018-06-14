@@ -56,7 +56,7 @@ export class AccountBuilderComponent implements OnInit {
     this.createForm();
     this.getRoles();
     this.credentialData = this.authService.getCredentialData();
-    const id = this.route.snapshot.paramMap.get('id');
+    this._getUserToEdit();
   }
 
   createForm() {
@@ -92,9 +92,20 @@ export class AccountBuilderComponent implements OnInit {
     }
   }
 
-  getUserById(id: number) {
+  _getUserToEdit() {
+    const id = this.route.snapshot.paramMap.get('id');
+    this.getUserById(id);
+  }
+
+  getUserById(id: string) {
+    if (!id) {
+      return;
+    }
     return this.restangular.one('users').one(id).get().subscribe(data => {
-      console.log(data);
+      // console.log(data);
+
+      this.account = data.plain();
+      console.log(this.account);
     });
   }
 

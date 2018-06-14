@@ -27,7 +27,7 @@ const routes: Routes = [
             }
           },
           {
-            path: 'builder/:id',
+            path: 'edit/:id',
             component: AccountBuilderComponent,
             data: {
               title: 'Edit User'

@@ -26,8 +26,7 @@ export class AccountListComponent implements OnInit, AfterViewInit {
 
   constructor(private restangular: Restangular,
               private router: Router,
-              private route:  ActivatedRoute
-  ) {
+              private route: ActivatedRoute) {
   }
 
   ngAfterViewInit() {
@@ -59,7 +58,7 @@ export class AccountListComponent implements OnInit, AfterViewInit {
       return;
     }
     const id = selectedData[0].id;
-    this.router.navigate(['/admin/user/builder'], id);
+    this.router.navigate(['/admin/user/edit', id]);
   }
 
   onRowSelected(event) {
